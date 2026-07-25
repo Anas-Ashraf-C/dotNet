@@ -1,0 +1,153 @@
+using System;
+using System.Collections;
+using System.Linq.Expressions;
+using System.Threading; 
+
+namespace ToDo_List
+{
+    internal class Program
+    {
+        static void ClearScreen()
+        {
+            Console.Clear();
+        }
+
+        static void sleep(double second)
+        {
+            Thread.Sleep(TimeSpan.FromSeconds(second));
+        }
+
+        static void Main(string[] args)
+        {
+            ArrayList tasks = new();
+            ArrayList completedTasks = new();
+
+            Console.WriteLine("Welcome to the (ToDo List) App!");
+
+            while (true)
+            {
+                Console.WriteLine("Enter Number 1 for Add Task");
+                Console.WriteLine("Enter Number 2 for see all compeleted tasks");
+                if (tasks.Count > 0)
+                {
+                    Console.WriteLine("Enter Number 3 for See All Task");
+                    Console.WriteLine("Enter Number 4 to delete a task from existing tasks");
+                    Console.WriteLine("Enter Number 5 to mark a task as completed");
+                }
+                Console.WriteLine("Enter 0 to exit the program");
+
+                Console.Write("Enter your action: ");
+                string action = Console.ReadLine();
+
+                if (action == "1")
+                {
+                    ClearScreen();
+                    Console.Write("Enter your new task: ");
+                    string task = Console.ReadLine();
+                    tasks.Add(task);
+                    ClearScreen();
+                    Console.WriteLine("The task was successfully added");
+                    Console.WriteLine();
+                }
+                else if (action == "2")
+                {
+                    ClearScreen();
+                    if (completedTasks.Count <= 0)
+                    {
+                        Console.WriteLine("there is no completed task here!");
+                        Console.WriteLine();
+                    }
+                    else
+                    {
+                        Console.WriteLine("loading...");
+                        sleep(1);
+                        int x = 1;
+                        foreach (string i in completedTasks)
+                        {
+                            Console.WriteLine($"Task {x} is: {i}");
+                            sleep(0.5);
+                            x++;
+                        }
+                        Console.WriteLine();
+                    }
+                }
+                else if (action == "3")
+                {
+                    ClearScreen();
+                    Console.WriteLine("loading...");
+                    sleep(1);
+                    int x = 1;
+                    foreach (string i in tasks)
+                    {
+                        Console.WriteLine($"Task {x} is: {i}");
+                        sleep(0.5);
+                        x++;
+                    }
+                    Console.WriteLine();
+                }
+                else if (action == "4")
+                {
+                    ClearScreen();
+                    int x = 1;
+                    foreach (string i in tasks)
+                    {
+                        Console.WriteLine($"Task {x} is: {i}");
+                        sleep(0.3);
+                        x++;
+                    }
+                    Console.WriteLine();
+                    Console.Write("What of the task number you want delete, Or enter C to cancel operation: ");
+                    string selected = Console.ReadLine();
+                    try
+                    {
+                        if (selected.ToLower() == "c")
+                        {
+                            continue;
+                        }
+                        else
+                        {
+                            int index = int.Parse(selected);
+                            tasks.RemoveAt(index - 1);
+                            Console.WriteLine("The task was successfully deleted");
+                            Console.WriteLine();
+                        }
+                    }
+                    catch
+                    {
+                        ClearScreen();
+                        Console.WriteLine("Error: Invalid Value, Please Enter Right Value");
+                        Console.WriteLine();
+                    }
+                    
+                }
+                else if (action == "5")
+                {
+                    ClearScreen();
+                    int x = 1;
+                    foreach (string i in tasks)
+                    {
+                        Console.WriteLine($"Task {x} is: {i}");
+                        sleep(0.3);
+                        x++;
+                    }
+                    Console.WriteLine();
+                    Console.Write("What of the task number you finished: ");
+                    int index = int.Parse(Console.ReadLine());
+                    completedTasks.Add(tasks[index -1]);
+                    tasks.RemoveAt(index - 1);
+                    Console.WriteLine("Done");
+                }
+                else if (action == "0")
+                {
+                    break;
+                }
+                else
+                {
+                    Console.WriteLine();
+                    Console.WriteLine("Error: Invalid Value, Please Enter Right Value");
+                    Console.WriteLine();
+                }
+            }
+        }
+    }
+}
